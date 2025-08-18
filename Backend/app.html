@@ -1,0 +1,174 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Applications</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f9;
+      padding: 20px;
+    }
+
+    .job-block {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .job-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .job-description {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .applicants-box {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      background: #fafafa;
+    }
+
+    .applicant-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .applicant-name {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .applicant-details {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn-accept {
+      background: #4caf50;
+      color: #fff;
+    }
+
+    .btn-reject {
+      background: #f44336;
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media(max-width:600px){
+      .job-title{
+        font-size: 16px;
+      }
+      .applicant-card{
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="job-block">
+    <div class="job-title">Construction Worker Needed</div>
+    <div class="job-description">Looking for 5 skilled labourers for a 2-month project in Udaipur.</div>
+
+    <div class="applicants-box">
+      <div class="applicant-card">
+        <div class="applicant-name">Ramesh Kumar</div>
+        <div class="applicant-details">Experience: 2 years | Contact: 9876543210</div>
+        <div class="actions">
+          <button class="btn btn-accept" onclick="acceptApplicant(this)">Accept</button>
+          <button class="btn btn-reject" onclick="rejectApplicant(this)">Reject</button>
+        </div>
+      </div>
+
+      <div class="applicant-card">
+        <div class="applicant-name">Suresh Sharma</div>
+        <div class="applicant-details">Experience: 3 years | Contact: 9123456780</div>
+        <div class="actions">
+          <button class="btn btn-accept" onclick="acceptApplicant(this)">Accept</button>
+          <button class="btn btn-reject" onclick="rejectApplicant(this)">Reject</button>
+        </div>
+      </div>
+
+      <div class="applicant-card">
+        <div class="applicant-name">Amit Patel</div>
+        <div class="applicant-details">Experience: 1 year | Contact: 9871122334</div>
+        <div class="actions">
+          <button class="btn btn-accept" onclick="acceptApplicant(this)">Accept</button>
+          <button class="btn btn-reject" onclick="rejectApplicant(this)">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+  <div class="job-block">
+    <div class="job-title">Tailoring Work</div>
+    <div class="job-description">Need 3 women tailors for stitching uniforms. Work from home possible.</div>
+
+    <div class="applicants-box">
+      <div class="applicant-card">
+        <div class="applicant-name">Sunita Devi</div>
+        <div class="applicant-details">Experience: 5 years | Contact: 9988776655</div>
+        <div class="actions">
+          <button class="btn btn-accept" onclick="acceptApplicant(this)">Accept</button>
+          <button class="btn btn-reject" onclick="rejectApplicant(this)">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function acceptApplicant(button) {
+      let card = button.closest(".applicant-card");
+      card.style.border = "2px solid green";
+      alert(card.querySelector(".applicant-name").innerText + " has been accepted ✅");
+    }
+
+    function rejectApplicant(button) {
+      let card = button.closest(".applicant-card");
+      card.style.border = "2px solid red";
+      alert(card.querySelector(".applicant-name").innerText + " has been rejected ❌");
+    }
+  </script>
+
+</body>
+</html> -->
