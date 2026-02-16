@@ -11,10 +11,7 @@ import { Navigate } from "react-router-dom";
 
 //   }
 function Auth({ children, allowedRole }) {
-  
   const user = JSON.parse(sessionStorage.getItem("user"));
-
-
   if (!user) {
     return <Navigate to="/login" state={{roleRequired : allowedRole}}/>;
   }

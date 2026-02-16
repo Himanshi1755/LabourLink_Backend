@@ -172,3 +172,183 @@
 
 </body>
 </html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Profile</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .profile-card {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .profile-image {
+      flex: 1;
+      min-width: 280px;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .profile-image img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transform: scale(0.8);
+      opacity: 0;
+      animation: popIn 1s ease-in-out forwards;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .profile-info {
+      flex: 2;
+      padding: 30px 40px;
+      animation: fadeIn 1.5s ease-in-out forwards;
+      opacity: 0;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 28px;
+      color: #222;
+    }
+
+    .profile-info p.bio {
+      color: #555;
+      font-size: 15px;
+      margin: 8px 0 20px;
+      line-height: 1.6;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 30px;
+    }
+
+    .info-item {
+      background: #f9fbfd;
+      padding: 12px 16px;
+      border-left: 4px solid #0077b6;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .info-item strong {
+      display: block;
+      font-weight: 600;
+      color: #0077b6;
+      margin-bottom: 3px;
+    }
+
+    .info-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .contact-btn {
+      margin-top: 25px;
+      display: inline-block;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-btn:hover {
+      background: linear-gradient(135deg, #023e8a, #0096c7);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    @media(max-width: 768px) {
+      .profile-card {
+        flex-direction: column;
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <div class="profile-image">
+      <img src="https://via.placeholder.com/200" alt="Patient Image">
+    </div>
+    <div class="profile-info">
+      <h2>John Doe</h2>
+      <p class="bio">
+        A 35-year-old patient who is passionate about healthy living. Enjoys outdoor activities 
+        and committed to following a balanced lifestyle.
+      </p>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Email</strong>
+          john.doe@example.com
+        </div>
+        <div class="info-item">
+          <strong>Age</strong>
+          35
+        </div>
+        <div class="info-item">
+          <strong>Gender</strong>
+          Male
+        </div>
+        <div class="info-item">
+          <strong>Phone</strong>
+          +1 123-456-7890
+        </div>
+        <div class="info-item" style="grid-column: span 2;">
+          <strong>Address</strong>
+          123 Main Street, Springfield, USA
+        </div>
+      </div>
+      <a href="mailto:john.doe@example.com" class="contact-btn">Contact Patient</a>
+    </div>
+  </div>
+</body>
+</html>

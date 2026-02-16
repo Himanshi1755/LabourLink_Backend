@@ -6,9 +6,10 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ShieldIcon from '@mui/icons-material/Shield';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 // import { currentUser } from "../../redux/UserSlice";
 import { useSelector, useDispatch } from 'react-redux';
+import "../Home/Home.css";
 
 
 function Home() {
@@ -16,7 +17,7 @@ function Home() {
     const navigate = useNavigate();
     const { currentUser } = useSelector((state) => state.user);
     const dispatch = useDispatch();
-
+    // const redirectTo = location.state?.redirectTo || "/"
 
     return (
         <>
@@ -25,32 +26,50 @@ function Home() {
             <div className="container mt-0 py-5" >
                 <div className="row align-items-center" style={{ backgroundColor: '#edf9fbff', padding: '20px', borderRadius: '8px' }}>
                     <div className="col-md-6 mb-4">
-                        <h5 className="text-primary fw-bold">Connecting hands to the work</h5>
-                        <p>
-                            Bridging skilled hands with real opportunities. Join thousands of workers and employers who trust LabourLink for local employment solutions.
-                        </p>
+                        <div className="intro-section">
+                            <h5 className="intro-heading">
+                                Connecting Hands to the Work
+                            </h5>
+                            <p className="intro-text">
+                                Bridging skilled hands with real opportunities. <br />
+                                Join thousands of workers and employers who trust
+                                <span className="brand"> LabourLink</span> for local employment solutions.
+                            </p>
+                        </div>
                         <div className="d-flex mt-4 gap-3">
-                            {!currentUser && (
-                                <>
-                                    <button
-                                        onClick={() =>
-                                            navigate("/login", { state: { roleRequired: "worker", redirectTo: "/find-work" }, })}
-                                        className="btn btn-primary fw-bold p-0"
-                                        style={{ width: "200px", height: "32px" }}>
-                                        I Need Work{" "}
-                                        <ArrowForwardIcon sx={{ fontSize: "19px", marginBottom: "2px" }} />{" "}
-                                        <i className="fas fa-arrow-right"></i>
-                                    </button>
+                            <>
+                                <button style={{marginLeft : "100px"}}
+                                    onClick={() => {
+                                        if (currentUser) {
+                                            navigate("/find-work");
+                                        }
+                                        else {
+                                            navigate("/login", { state: { roleRequired: "worker", redirectTo: "/find-work" } });
+                                        }
+                                    }}
+                                    className="custom-btn worker-btn fw-bold p-0">
+                                    {/* style={{ width: "200px", height: "32px" }} */}
+                                    I Need Work{" "}
+                                    <ArrowForwardIcon sx={{ fontSize: "17px", marginBottom: "2px" }} />{" "}
+                                    <i className="fas fa-arrow-right"></i>
+                                </button>
 
-                                    <button
-                                        onClick={() => navigate("/login", { state: { roleRequired: "employer", redirectTo: "/post-job" } })}
-                                        className="btn btn-warning text-dark fw-bold p-0"
-                                        style={{ width: "200px", height: "32px" }}>
-                                        I Have Work{" "}
-                                        <ArrowForwardIcon sx={{ fontSize: "19px", marginBottom: "2px" }} />
-                                    </button>
-                                </>
-                            )}
+                                <button
+                                    onClick={() => {
+                                        if (currentUser) {
+                                            navigate("/post-job");
+                                        }
+                                        else {
+                                            navigate("/login", { state: { roleRequired: "employer", redirectTo: "/post-job" } });
+                                        }
+                                    }}
+                                    className="custom-btn employer-btn">
+                                    {/* style={{ width: "200px", height: "32px" }} */}
+                                    I Have Work{" "}
+                                    <ArrowForwardIcon sx={{ fontSize: "17px", marginBottom: "2px" }} />
+                                </button>
+                            </>
+
                         </div>
                     </div>
 
@@ -68,22 +87,22 @@ function Home() {
                 </p>
 
                 <div className="d-flex  justify-content-center gap-4 mt-5 mb-5 flex-wrap">
-                    <div className="p-3 bg-info-subtle rounded " style={{ width: "220px", height: "225px" }}>
+                    <div className="cards p-3 bg-info-subtle rounded " style={{ width: "220px", height: "225px" }}>
                         <div style={{ backgroundColor: "#e3f8f7ff", width: "45px", height: "50px", borderRadius: "20%", display: "inline-block", marginTop: "15px" }}><PeopleAltIcon sx={{ marginTop: "12px" }} /></div>
                         <h6 className="mt-4">Verified Workers</h6>
                         <p className="mt-3" style={{ fontSize: "12px" }} >Connect with skilled professionals who have been verified for quality and reliability.</p>
                     </div>
-                    <div className="p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
-                        <div style={{ backgroundColor: "#ccf7f4ff", width: "45px", height: "50px", borderRadius: "20%", display: "inline-block", marginTop: "15px" }}></div>
+                    <div className="cards p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
+                        <div style={{ backgroundColor: "#bcf8f4ff", width: "45px", height: "50px", borderRadius: "20%", display: "inline-block", marginTop: "15px" }}></div>
                         <h6 className="mt-4">Trusted Clients</h6>
                         <p className="mt-3" style={{ fontSize: "12px" }}>Work with reputable companies and employers who value your skills and time.</p>
                     </div>
-                    <div className="p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
+                    <div className="cards p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
                         <div style={{ backgroundColor: "#d7fed4ff", width: "45px", height: "50px", borderRadius: "20%", display: "inline-block", marginTop: "15px" }}><LocationOnIcon sx={{ marginTop: "12px" }} /></div>
                         <h6 className="mt-4">Local Opportunities</h6>
                         <p className="mt-3" style={{ fontSize: "12px" }}>Find work opportunities in your local area and nearby communities.</p>
                     </div>
-                    <div className="p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
+                    <div className="cards p-3 bg-info-subtle rounded" style={{ width: "220px", height: "225px" }}>
                         <div style={{ backgroundColor: "#d1d2fdff", width: "45px", height: "50px", borderRadius: "20%", display: "inline-block", marginTop: "15px" }}><ShieldIcon sx={{ marginTop: "12px" }} /></div>
                         <h6 className="mt-4">Quick Matching</h6>
                         <p className="mt-3" style={{ fontSize: "12px" }}>Get instantly matched with the right jobs or workers based on your preferences.</p>

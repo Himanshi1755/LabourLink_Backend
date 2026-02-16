@@ -4,11 +4,10 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { User } from "./models/userModel.js";
 import jobRouter from "./routes/jobRoute.js";
 import appRouter from "./routes/applicationRoute.js";
-import { Job } from "./models/jobModel.js";
-import { Application } from "./models/appliactionModel.js";
+import saveRouter from "./routes/savedjobRoute.js";
+import contactRouter from "./routes/contactRoute.js";
 import user from "./routes/userRoute.js";
 dotenv.config();
 
@@ -25,6 +24,8 @@ app.use(bodyParser.json());
 app.use("/user", user);
 app.use("/", jobRouter);
 app.use("/", appRouter);
+app.use("/", saveRouter);
+app.use("/", contactRouter);
 
 mongoose.connect(process.env.DB_URL)
   .then(() => {

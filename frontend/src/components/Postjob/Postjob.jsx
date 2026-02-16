@@ -32,8 +32,12 @@ function PostJob() {
     requiredskills: "",
   });
 
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editingJobId, setEditingJobId] = useState(null);
+
 
   const [tab, setTab] = useState(0);
+  const [selectJobId, setSelectedJobId] = useState(null);
 
   const handleTabChange = (event, newValue) => {
     setTab(newValue);
@@ -45,12 +49,39 @@ function PostJob() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const jobDetails = { ...job };
-    try {
-      const data = await axios.post("http://localhost:3000/jobs", jobDetails, { withCredentials: true })
-       toast.dismiss();
-      toast.success("Job Post Succesfully!!");
 
+    if (!job.title.trim() || !job.description.trim() || !job.wage || !job.location.trim()) {
+      toast.error("Please fill all required fields (title, description, wage, location)");
+      return;
+    }
+    const descriptionWords = job.description.trim().split(/\s+/);
+    if (descriptionWords.length < 2 || descriptionWords.length > 40) {
+      toast.error("Description must be between 2 and 40 words.");
+      return;
+    }
+
+    const jobDetails = {
+      ...job,
+      requiredSkills: job.requiredskills
+        ? job.requiredskills.split(",").map(s => s.trim())
+        : [],
+    };
+
+    // delete jobDetails.requiredskills;
+
+    // if (!jobDetails.jobType) {
+    //   delete jobDetails.jobType;
+    // }
+
+    try {
+
+      if (isEditMode) {
+        await axios.patch(`http://localhost:3000/jobs/${editingJobId}`, jobDetails, { withCredentials: true });
+        toast.success("Job updated Sucessfully !!")
+      } else {
+        await axios.post("http://localhost:3000/jobs", jobDetails, { withCredentials: true })
+        toast.success("Job Post Succesfully!!");
+      }
       setJob({
         title: "",
         location: "",
@@ -62,29 +93,14 @@ function PostJob() {
         requiredskills: "",
       });
 
+      setIsEditMode(false);
+      setEditingJobId(null);
+
     } catch (error) {
-       toast.dismiss();
       toast.error("Something went wrong");
-      console.log("post job : ", error);
+      console.log("Handle Submit of PostJob is something error: ", error);
     }
   }
-
-
-
-  // useEffect(() => {
-  //   jobsData()
-  // }, [])
-
-  // const jobsData = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:3000/jobs", { withCredentials: true })
-  //     console.log(response)
-
-  //   }
-  //   catch (err) {
-  //     console.log(err)
-  //   }
-  // }
   return (
     <>
       <Header />
@@ -112,11 +128,9 @@ function PostJob() {
                     name="title"
                     placeholder="e.g., Tailor, Painter, carpenter etc"
                     // onChange={(e) => setJob({ ...job, title: e.target.value })}
-                    onChange={handleChange}
-
                     value={job.title}
-                    required
-                  />
+                    onChange={handleChange}
+/>
                 </div>
                 <div className="form-group">
                   <label>Location *</label>
@@ -127,8 +141,9 @@ function PostJob() {
                       name="location"
                       placeholder="e.g., Sector 15, Noida"
                       // onChange={(e) => setJob({ ...job, location: e.target.value })}
+                       value={job.location}
                       onChange={handleChange}
-                      value={job.location}
+                     
                     />
                   </div>
                 </div>
@@ -142,9 +157,9 @@ function PostJob() {
                     name="wage"
                     placeholder="e.g., 500"
                     // onChange={(e) => setJob({ ...job, wage: e.target.value })}
+                     value={job.wage}
                     onChange={handleChange}
-
-                    value={job.wage}
+                   
                   />
                 </div>
                 <div className="form-group">
@@ -153,13 +168,13 @@ function PostJob() {
                     value={job.jobType}
                     // onChange={(e) => setJob({ ...job, jobType: e.target.value })}
                     onChange={handleChange}
-
+                   
                   >
-                    <option>Select job type</option>
-                    <option>Full-time</option>
-                    <option>Part-time</option>
-                    <option>Contract</option>
-                    <option>Contract</option>
+                    <option value="">-- Select job type --</option>
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Internship">Internship</option>
                   </select>
                 </div>
               </div>
@@ -169,11 +184,13 @@ function PostJob() {
                   <label>Job Duration</label>
                   <select name="duration" value={job.duration} onChange={handleChange}
                   >
-                    <option>Select duration</option>
-                    <option>1 Day</option>
-                    <option>1 Week</option>
-                    <option>1 Month</option>
-                    <option>More than 1 Month</option>
+
+                    <option value="">-- Select duration --</option>
+                    <option value="Permanent">Permanent/Regular</option>
+                    <option value="1 Day">1 Day</option>
+                    <option value="1 Week">1 Week</option>
+                    <option value="1 Month">1 Month</option>
+
                   </select>
                 </div>
                 <div className="form-group">
@@ -183,8 +200,9 @@ function PostJob() {
                     <input
                       type="date"
                       name="startDate"
+                       value={job.startDate}
                       onChange={handleChange}
-                      value={job.startDate}
+                     
                     />
                   </div>
                 </div>
@@ -196,9 +214,10 @@ function PostJob() {
                   name="description"
                   rows="3"
                   placeholder="Describe the work, conditions, etc."
+                  
+                  value={job.description}
                   onChange={handleChange}
 
-                  value={job.description}
                 ></textarea>
               </div>
 
@@ -219,26 +238,52 @@ function PostJob() {
                 <span>Job will be visible to workers immediately after posting</span>
               </p>
 
-              <div className="button-row">
-
-                <button className="post-btn" type="submit">
-                  <AddIcon sx={{ fontSize: "22px", paddingBottom: "3px" }} />
-                  Post Job
+            
+              <div className="button-row" style={{display : "flex ",gap:"5px", marginTop:"20px"}}>
+                <button className="post-btn" type="submit" style={{width:"400px", padding :"5px 20px" ,fontSize : "15px" ,color : "white",borderRadius : "6px" , border : "none" }}> 
+                  <AddIcon sx={{ fontSize: "22px", paddingBottom: "2px" }} />
+                  {isEditMode ? "Update Job" : "Post Job"}
                 </button>
+
+                {isEditMode && (
+                  <button
+                    type="button"
+                    className="cancel-btn"
+                    onClick={() => {
+                     
+                      setJob({
+                        title: "",
+                        location: "",
+                        wage: "",
+                        jobType: "",
+                        duration: "",
+                        startDate: "",
+                        description: "",
+                        requiredskills: "",
+                      });
+                      setIsEditMode(false);
+                      setEditingJobId(null);
+                      toast.info("Edit cancelled");
+                    }}
+                    style={{ marginLeft: "10px", backgroundColor: "#f84d41ff", color: "white", border: "none", padding: "7px 16px", borderRadius: "4px" ,width : "400px" }}
+                  >
+                    Cancel
+                  </button>
+                )}
               </div>
+
             </div>
           </div>
         </TabPanel>
-        
 
         {/* Mnage job  */}
         <TabPanel value={tab} index={1}>
-          <ManageJob />
+          <ManageJob setTab={setTab} setSelectedJobId={setSelectedJobId} setIsEditMode={setIsEditMode} setEditingJobId={setEditingJobId} setJob={setJob} />
         </TabPanel>
 
         <TabPanel value={tab} index={2}>
           <Typography variant="h6" sx={{ mb: 2 }}>Applications Received</Typography>
-          <Applications role={"employer"} />
+          <Applications role={"employer"} selectJobId={selectJobId} />
         </TabPanel>
       </Box>
 
@@ -248,60 +293,4 @@ function PostJob() {
 };
 
 export default PostJob;
-// [
-//   {
-//     "title": "Mason",
-//     "description": "Build walls and small structures",
-//     "wage": 600,
-//     "location": "Indore",
-//     "jobType": "Contract",
-//     "requiredSkills": ["Brick work", "Concrete"],
-//     "startDate": "2025-08-21",
-//     "duration": "3 days",
-//     "employerID": "688d67b400fcf7f65d9ca3f9"
-//   },
-//   {
-//     "title": "Cleaner",
-//     "description": "Clean home, office or shop",
-//     "wage": 300,
-//     "location": "Bhopal",
-//     "jobType": "Part-time",
-//     "requiredSkills": ["Cleaning", "Sweeping", "Dusting"],
-//     "startDate": "2025-08-22",
-//     "duration": "1 day",
-//     "employerID": "688d67b400fcf7f65d9ca3f9"
-//   },
-//   {
-//     "title": "Gardener",
-//     "description": "Plant and maintain garden, water plants",
-//     "wage": 400,
-//     "location": "Indore",
-//     "jobType": "Part-time",
-//     "requiredSkills": ["Gardening", "Plant care"],
-//     "startDate": "2025-08-23",
-//     "duration": "2 days",
-//     "employerID": "688d67b400fcf7f65d9ca3f9"
-//   },
-//   {
-//     "title": "Painter Helper",
-//     "description": "Help painter with painting walls and furniture",
-//     "wage": 350,
-//     "location": "Bhopal",
-//     "jobType": "Contract",
-//     "requiredSkills": ["Painting", "Mix colors"],
-//     "startDate": "2025-08-24",
-//     "duration": "2 days",
-//     "employerID": "688d67b400fcf7f65d9ca3f9"
-//   },
-//   {
-//     "title": "Tailor",
-//     "description": "Stitch and repair clothes",
-//     "wage": 400,
-//     "location": "Indore",
-//     "jobType": "Full-time",
-//     "requiredSkills": ["Stitching", "Repairing clothes"],
-//     "startDate": "2025-08-25",
-//     "duration": "1 week",
-//     "employerID": "688d67b400fcf7f65d9ca3f9"
-//   }
-// ]
+

@@ -1,0 +1,65 @@
+
+.custom-btn {
+  width: 200px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.worker-btn {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: white;
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.worker-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+}
+
+
+.employer-btn {
+  background: linear-gradient(135deg, #facc15, #d97706);
+  color: #111;
+  box-shadow: 0 4px 8px rgba(234, 179, 8, 0.3);
+}
+
+.employer-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 12px rgba(8, 23, 234, 0.4);
+}
+.intro-section {
+  margin-top: 20px;
+  text-align: center;
+  padding: 15px;
+}
+
+.intro-heading {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+.intro-text {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;  
+}
+.cards:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.brand {
+  font-weight: 700;
+  color: #d97706; 
+}

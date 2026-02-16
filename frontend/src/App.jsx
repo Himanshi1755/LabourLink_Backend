@@ -12,6 +12,7 @@ import store from "../src/redux/store.js";
 import { Provider } from 'react-redux';
 import Auth from "./components/auth/Auth";
 import ManageJob from './components/Postjob/ManageJob.jsx';
+import ContactUs from './components/Contact/Contact.jsx';
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/find-work" element={
               <Auth allowedRole="worker"><FindWork /></Auth>} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
+            <Route path='/contact' element={<ContactUs/>}></Route>
 
           </Routes>
         </BrowserRouter>

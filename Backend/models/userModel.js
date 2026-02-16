@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: false
+        required: true
     },
     skills: {
         type: [String],

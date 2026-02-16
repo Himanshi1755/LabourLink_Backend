@@ -20,16 +20,19 @@ const jobSchema = mongoose.Schema({
     },
     jobType: {
         type: String,
-        required: true,
-        enum: ["Full-time", "Part-time", "Contract", "Long Term"],
+        required: false,
+        // enum: ["Full-time", "Part-time", "Contract", "Internship"],
+        default: "Full-time"
     },
     requiredSkills: {
         type: [String],
         required: false,
+        default: [],
     },
     startDate: {
         type: Date,
         required: false,
+        default: null
     },
     duration: {
         type: String,
@@ -40,10 +43,10 @@ const jobSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
-    status : {
-        type : String,
-        enum : ["Active", "Deactive"],
-        default:"Active"
+    status: {
+        type: String,
+        enum: ["Active", "Deactive"],
+        default: "Active"
     },
     postedAt: {
         type: Date,

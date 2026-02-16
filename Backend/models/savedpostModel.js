@@ -12,8 +12,8 @@ const savedpostschema = new mongoose.Schema({
         required: true,
     },
     savedAt: {
-type : Date,
-default : Date.now
+        type: Date,
+        default: Date.now
     },
 });
 

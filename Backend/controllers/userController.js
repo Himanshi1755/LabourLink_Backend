@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 export const registerUser = async (req, res) => {
     try {
         const { name, email, password, contactNo, role, location, skills } = req.body;
@@ -35,7 +34,6 @@ export const registerUser = async (req, res) => {
             location,
             skills
         });
-
         return res.status(201).json({ message: "Registered Successfully", user: newUser });
     } catch (error) {
         console.error("Register error:", error);
@@ -119,7 +117,7 @@ export const updateUserProfile = async (req, res) => {
     }
 };
 
-// ===================== HELPER FUNCTION =====================
+
 const generateToken = (user) => {
     const payload = {
         id: user._id,
