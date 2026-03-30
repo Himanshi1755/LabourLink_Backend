@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 export const applyToJob = async (req, res) => {
     try {
          if (req.user.role !== "worker") {
+          // Hello
             return res.status(403).json({ message: "Only workers can apply for jobs." });
         }
         const workerId = req.user.id;
